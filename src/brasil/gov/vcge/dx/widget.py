@@ -90,7 +90,9 @@ class SkosWidget(widget.SequenceWidget):
 
     @property
     def existing(self):
-        value = getattr(self.context, 'skos', [])
+        value = getattr(self.context, 'skos', None)
+        if value is None:
+            value = []
         terms = self.vocab()
         data = []
         for token in value:
