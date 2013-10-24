@@ -102,7 +102,11 @@ class SkosWidget(widget.SequenceWidget):
             # Ignore no value entries. They are in the request only.
             if token == self.noValueToken:
                 continue
-            term = terms.getTermByToken(token)
+            try:
+                term = terms.getTermByToken(token)
+            except LookupError:
+                # FIXME: An invalid token in the item should be logged
+                continue
             data.append({'value': token,
                          'title': term.title})
         return data
